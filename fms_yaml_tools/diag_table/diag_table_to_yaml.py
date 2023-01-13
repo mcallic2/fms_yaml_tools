@@ -40,6 +40,28 @@ def main():
     parser.add_argument('-f', type=str, help='Name of the ascii diag_table to convert' )
     in_diag_table = parser.parse_args().f
 
+
+    parser.add_argument('--file', '-fl', type=str,
+                        default='field_table.yml',
+                        help='Name of the field_table file to convert')
+    parser.add_argument('--verbose', '-v', action='store_true', default=False, help='Increase verbosity')
+    parser.add_argument('-o', '--output',
+                        dest='out_file',
+                        type=str,
+                        default='field_table.yaml',
+                        help="Ouput file name of the converted YAML \
+                              (Default: 'field_table.yaml')")
+    parser.add_argument('-F', '--force',
+                        action='store_true',
+                        default=False,
+                        help="Overwrite the output field table yaml file.")
+    parser.add_argument('-V', '--version',
+                        action="version",
+                        version=f"%(prog)s {__version__}")
+    global args
+    args = parser.parse_args()
+    diag_table_name = args.file
+
     #: start
     test_class = DiagTable( diag_table_file=in_diag_table )
     test_class.read_and_parse_diag_table()
@@ -333,6 +355,13 @@ class DiagTable :
         """ Read and parse the file """
         self.read_diag_table()
         self.parse_diag_table()
+
+    def main(self):
+        self.init_ordered_keys()
+        self.initialize_lists()
+        self.populate_entries()
+        self.make_objects()
+        self.convert_yaml()
 
 if __name__ == "__main__":
     main()
