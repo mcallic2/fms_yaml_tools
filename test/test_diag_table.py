@@ -4,7 +4,6 @@ import os
 import pathlib
 from contextlib import contextmanager
 
-from fms_yaml_tools.diag_table.diag_table_to_yaml import Diag
 from fms_yaml_tools.diag_table.diag_table_to_yaml import DiagTable
 from collections import OrderedDict
 
